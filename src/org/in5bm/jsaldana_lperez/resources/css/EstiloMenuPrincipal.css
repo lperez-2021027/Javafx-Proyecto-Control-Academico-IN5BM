@@ -1,0 +1,48 @@
+/**
+ *
+ * @author José Roberto Saldaña Arrazola
+ * @author Luis Carlos Pérez
+ * @date 26-abr-2022
+ * @time 8:26:32
+ *
+ * Código técnico: IN5BM
+ */
+
+#AnchorPane{
+  -fx-background-radius: 20 20 20 20;
+}
+
+#Pane{
+    -fx-background-color: linear-gradient(to bottom right, #00c1e6, #00d2b5 );
+}
+
+.BotonesMenu{
+    -fx-background-color: #e3dada;
+    -fx-background-radius: 5 5 5 5;
+}
+
+.BotonesMenu:hover{
+    -fx-background-color: #84e8e8;
+    -fx-font-size: 28;
+    -fx-font-family: "Times New Roman";
+    -fx-translate-y: -5;
+}
+
+#boton-asignacion:hover{
+    -fx-font-size: 22;
+    -fx-font-family: "Times New Roman";
+}
+
+#boton-asignacion:pressed{
+    -fx-background-color: #41b0af;
+    -fx-translate-y: 2;
+    -fx-font-size: 20;
+    -fx-font-family: "Times New Roman";
+}
+
+.BotonesMenu:pressed{
+    -fx-background-color: #41b0af;
+    -fx-translate-y: 2;
+    -fx-font-size: 23;
+    -fx-font-family: "Times New Roman";
+}
