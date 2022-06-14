@@ -35,6 +35,7 @@ import org.in5bm.jsaldana_lperez.system.Principal;
  *
  * Código técnico: IN5BM
  */
+
 public class SalonesController implements Initializable {
 
     private final String PAQUETE_IMAGE = "org/in5bm/jsaldana_lperez/resources/images/";
@@ -431,6 +432,7 @@ public class SalonesController implements Initializable {
                 imgReporte.setDisable(false);
                 limpiarCampos();
                 deshabilitarCampos();
+                tblSalones.getSelectionModel().clearSelection();
                 operacion = Operacion.NINGUNO;
                 break;
             case MODIFICAR:

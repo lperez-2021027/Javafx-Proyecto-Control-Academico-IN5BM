@@ -1,130 +1,195 @@
 package org.in5bm.jsaldana_lperez.models;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import java.time.LocalDate;
+
 /**
  *
+ * @author José Roberto Saldaña Arrazola
  * @author Luis Carlos Pérez
- * @date 2/05/2022
- * @time 17:12:07
- * 
- *Código técnico: IN5BM
+ * @date 26-abr-2022
+ * @time 8:26:32
  *
+ * Código técnico: IN5BM
  */
+
 public class Instructores {
-    
+
     // Atributos
-    private String nombre1;
-    private String nombre2;
-    private String nombre3;
-    private String apellido1;
-    private String apellido2;
-    private String direccion;
-    private String email;
-    private String telefono;
-    private String fechaNacimiento;
-    
+    private IntegerProperty id;
+    private StringProperty nombre1;
+    private StringProperty nombre2;
+    private StringProperty nombre3;
+    private StringProperty apellido1;
+    private StringProperty apellido2;
+    private StringProperty direccion;
+    private StringProperty email;
+    private StringProperty telefono;
+    private ObjectProperty<LocalDate> fechaNacimiento;
+
     // Constructores
     // Constructor nulo
-    public Instructores(){
-        
+    public Instructores() {
+        this.id = new SimpleIntegerProperty();
+        this.nombre1 = new SimpleStringProperty();
+        this.nombre2 = new SimpleStringProperty();
+        this.nombre3 = new SimpleStringProperty();
+        this.apellido1 = new SimpleStringProperty();
+        this.apellido2 = new SimpleStringProperty();
+        this.direccion = new SimpleStringProperty();
+        this.email = new SimpleStringProperty();
+        this.telefono = new SimpleStringProperty();
+        this.fechaNacimiento = new SimpleObjectProperty<>();
     }
-    
-    // Constructor con parametros not null
-    public Instructores(String nombre1, String apellido1, String email, String telefono){
-        this.nombre1 = nombre1;
-        this.apellido1 = apellido1;
-        this.email = email;
-        this.telefono = telefono;
-    }
-    
+
     // Constructor con todos los parametros
-    public Instructores(String nombre1, String nombre2, String nombre3, String apellido1, 
-            String apellido2, String direccion, String email, String telefono, String fechaNacimiento){
-        this.nombre1 = nombre1;
-        this.nombre2 = nombre2;
-        this.nombre3 = nombre3;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.direccion = direccion;
-        this.email = email;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
+    public Instructores(int id, String nombre1, String nombre2, String nombre3, String apellido1,
+            String apellido2, String direccion, String email, String telefono, LocalDate fechaNacimiento) {
+        this.id = new SimpleIntegerProperty(id);
+        this.nombre1 = new SimpleStringProperty(nombre1);
+        this.nombre2 = new SimpleStringProperty(nombre2);
+        this.nombre3 = new SimpleStringProperty(nombre3);
+        this.apellido1 = new SimpleStringProperty(apellido1);
+        this.apellido2 = new SimpleStringProperty(apellido2);
+        this.direccion = new SimpleStringProperty(direccion);
+        this.email = new SimpleStringProperty(email);
+        this.telefono = new SimpleStringProperty(telefono);
+        this.fechaNacimiento = new SimpleObjectProperty<>(fechaNacimiento);
     }
-    
+
     // Métodos Getter´s y Setter´s
-    public String getNombre1(){
+    public IntegerProperty id() {
+        return id;
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public StringProperty nombre1() {
         return nombre1;
     }
-    
-    public void setNombre1(String nombre1){
-        this.nombre1 = nombre1;
+
+    public String getNombre1() {
+        return nombre1.get();
     }
-    
-    public String getNombre2(){
+
+    public void setNombre1(String nombre1) {
+        this.nombre1.set(nombre1);
+    }
+
+    public StringProperty nombre2() {
         return nombre2;
     }
-    
-    public void setNombre2(String nombre2){
-        this.nombre2 = nombre2;
+
+    public String getNombre2() {
+        return nombre2.get();
     }
-    
-    public String getNombre3(){
+
+    public void setNombre2(String nombre2) {
+        this.nombre2.set(nombre2);
+    }
+
+    public StringProperty nombre3() {
         return nombre3;
     }
-    
-    public void setNombre3(String nombre3){
-        this.nombre3 = nombre3;
+
+    public String getNombre3() {
+        return nombre3.get();
     }
-    
-    public String getApellido1(){
+
+    public void setNombre3(String nombre3) {
+        this.nombre3.set(nombre3);
+    }
+
+    public StringProperty apellido1() {
         return apellido1;
     }
-    
-    public void setApellido1(String apellido1){
-        this.apellido1 = apellido1;
+
+    public String getApellido1() {
+        return apellido1.get();
     }
-    
-    public String getApellido2(){
+
+    public void setApellido1(String apellido1) {
+        this.apellido1.set(apellido1);
+    }
+
+    public StringProperty apellido2() {
         return apellido2;
     }
-    
-    public void setApellido2(String apellido2){
-        this.apellido2 = apellido2;
+
+    public String getApellido2() {
+        return apellido2.get();
     }
-    
-    public String getDireccion(){
+
+    public void setApellido2(String apellido2) {
+        this.apellido2.set(apellido2);
+    }
+
+    public StringProperty direccion() {
         return direccion;
     }
-    
-    public void setDireccion(String direccion){
-        this.direccion = direccion;
+
+    public String getDireccion() {
+        return direccion.get();
     }
     
-    public String getEmail(){
+    public void setDireccion(String direccion) {
+        this.direccion.set(direccion);
+    }
+    
+    public StringProperty email() {
         return email;
     }
     
-    public void setEmail(String email){
-        this.email = email;
+    public String getEmail() {
+        return email.get();
     }
     
-    public String getTelefono(){
+    public void setEmail(String email) {
+        this.email.set(email);
+    }
+    
+    public StringProperty telefono() {
         return telefono;
     }
     
-    public void setTelefono(String telefono){
-        this.telefono = telefono;
+    public String getTelefono() {
+        return telefono.get();
     }
     
-    public String getFechaNacimiento(){
+    public void setTelefono(String telefono) {
+        this.telefono.set(telefono);
+    }
+    
+    public ObjectProperty fechaNacimiento() {
         return fechaNacimiento;
     }
     
-    public void setFechaNacimiento(String fechaNacimiento){
-        this.fechaNacimiento = fechaNacimiento;
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento.get();
     }
+    
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento.set(fechaNacimiento);
+    }
+
+    /*@Override
+    public String toString() {
+        return id + " | " + nombre1 + " | "+ apellido1;
+    }*/
 
     @Override
     public String toString() {
-        return "Instructores{" + "nombre1=" + nombre1 + ", nombre2=" + nombre2 + ", nombre3=" + nombre3 + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", direccion=" + direccion + ", email=" + email + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + '}';
+        return id.getValue() + " | " + nombre1.getValue() + " | " + apellido1.getValue();
     }
 }

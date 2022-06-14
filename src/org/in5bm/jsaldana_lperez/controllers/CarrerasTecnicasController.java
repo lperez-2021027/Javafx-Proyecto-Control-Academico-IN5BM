@@ -35,6 +35,7 @@ import javafx.scene.image.ImageView;
  *
  * Código técnico: IN5BM
  */
+
 public class CarrerasTecnicasController implements Initializable {
 
     private final String PAQUETE_IMAGE = "org/in5bm/jsaldana_lperez/resources/images/";
@@ -326,7 +327,7 @@ public class CarrerasTecnicasController implements Initializable {
 
             return true;
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar actualizar el registro : " + carreraTecnica.toString());
+            System.err.println("\nSe produjo un error al intentar agregar el registro : " + carreraTecnica.toString());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

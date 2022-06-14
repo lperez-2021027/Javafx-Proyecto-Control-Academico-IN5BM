@@ -1,35 +1,35 @@
 package org.in5bm.jsaldana_lperez.controllers;
 
+import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
+import java.sql.Time;
+import java.sql.ResultSet;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.in5bm.jsaldana_lperez.db.Conexion;
+import org.in5bm.jsaldana_lperez.models.Horarios;
 import org.in5bm.jsaldana_lperez.system.Principal;
 
-import org.in5bm.jsaldana_lperez.models.Alumnos;
-
-import org.in5bm.jsaldana_lperez.db.Conexion;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-
-/*
+/**
  *
  * @author José Roberto Saldaña Arrazola
  * @author Luis Carlos Pérez
@@ -39,7 +39,7 @@ import javafx.scene.image.ImageView;
  * Código técnico: IN5BM
  */
 
-public class AlumnosController implements Initializable {
+public class HorariosController implements Initializable {
 
     private final String PAQUETE_IMAGE = "org/in5bm/jsaldana_lperez/resources/images/";
 
@@ -52,69 +52,57 @@ public class AlumnosController implements Initializable {
     private Principal escenarioPrincipal;
 
     @FXML
-    private TextField txtCarne;
-
-    @FXML
-    private TextField txtNombre1;
-
-    @FXML
-    private TextField txtNombre2;
-
-    @FXML
-    private TextField txtNombre3;
-
-    @FXML
-    private TextField txtApellido1;
-
-    @FXML
-    private TextField txtApellido2;
-
-    @FXML
-    private Button btnNuevo;
-
-    @FXML
-    private Button btnModificar;
-
-    @FXML
-    private Button btnEliminar;
-
-    @FXML
-    private Button btnReporte;
-
-    @FXML
-    private TableView tblAlumnos;
-
-    @FXML
-    private TableColumn colCarne;
-
-    @FXML
-    private TableColumn colNombre1;
-
-    @FXML
-    private TableColumn colNombre2;
-
-    @FXML
-    private TableColumn colNombre3;
-
-    @FXML
-    private TableColumn colApellido1;
-
-    @FXML
-    private TableColumn colApellido2;
-
+    private TextField txtId;
     @FXML
     private ImageView imgNuevo;
-
+    @FXML
+    private Button btnNuevo;
     @FXML
     private ImageView imgModificar;
-
+    @FXML
+    private Button btnModificar;
     @FXML
     private ImageView imgEliminar;
-
+    @FXML
+    private Button btnEliminar;
     @FXML
     private ImageView imgReporte;
+    @FXML
+    private Button btnReporte;
+    @FXML
+    private TableView<Horarios> tblHorarios;
+    @FXML
+    private TableColumn<Horarios, Integer> colId;
+    @FXML
+    private TableColumn<Horarios, Time> colHoraInicio;
+    @FXML
+    private TableColumn<Horarios, Time> colHoraFInal;
+    @FXML
+    private TableColumn<Horarios, Boolean> colLunes;
+    @FXML
+    private TableColumn<Horarios, Boolean> colMartes;
+    @FXML
+    private TableColumn<Horarios, Boolean> colMiercoles;
+    @FXML
+    private TableColumn<Horarios, Boolean> colJueves;
+    @FXML
+    private TableColumn<Horarios, Boolean> colViernes;
+    @FXML
+    private CheckBox ckbLunes;
+    @FXML
+    private CheckBox ckbMartes;
+    @FXML
+    private CheckBox ckbMiercoles;
+    @FXML
+    private CheckBox ckbJueves;
+    @FXML
+    private CheckBox ckbViernes;
+    @FXML
+    private JFXTimePicker tpkHoraInicio;
+    @FXML
+    private JFXTimePicker tpkHoraFinal;
 
-    private ObservableList<Alumnos> listaAlumnos;
+    private ObservableList<Horarios> listaHorarios;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -122,40 +110,44 @@ public class AlumnosController implements Initializable {
     }
 
     public void cargarDatos() {
-        tblAlumnos.setItems(getAlumnos());
-        colCarne.setCellValueFactory(new PropertyValueFactory<Alumnos, String>("carne"));
-        colNombre1.setCellValueFactory(new PropertyValueFactory<Alumnos, String>("nombre1"));
-        colNombre2.setCellValueFactory(new PropertyValueFactory<Alumnos, String>("nombre2"));
-        colNombre3.setCellValueFactory(new PropertyValueFactory<Alumnos, String>("nombre3"));
-        colApellido1.setCellValueFactory(new PropertyValueFactory<Alumnos, String>("apellido1"));
-        colApellido2.setCellValueFactory(new PropertyValueFactory<Alumnos, String>("apellido2"));
+        tblHorarios.setItems(getHorarios());
+        colId.setCellValueFactory(new PropertyValueFactory("id"));
+        colHoraFInal.setCellValueFactory(new PropertyValueFactory("horarioInicio"));
+        colHoraInicio.setCellValueFactory(new PropertyValueFactory("horarioFinal"));
+        colLunes.setCellValueFactory(new PropertyValueFactory("lunes"));
+        colMartes.setCellValueFactory(new PropertyValueFactory("martes"));
+        colMiercoles.setCellValueFactory(new PropertyValueFactory("miercoles"));
+        colJueves.setCellValueFactory(new PropertyValueFactory("jueves"));
+        colViernes.setCellValueFactory(new PropertyValueFactory("viernes"));
     }
 
     public boolean existeElementoSeleccionado() {
-        return (tblAlumnos.getSelectionModel().getSelectedItem() != null);
+        return (tblHorarios.getSelectionModel().getSelectedItem() != null);
     }
 
     @FXML
     public void seleccionarElemento() {
         if (existeElementoSeleccionado()) {
-            txtCarne.setText(((Alumnos) tblAlumnos.getSelectionModel().getSelectedItem()).getCarne());
-            txtNombre1.setText(((Alumnos) tblAlumnos.getSelectionModel().getSelectedItem()).getNombre1());
-            txtNombre2.setText(((Alumnos) tblAlumnos.getSelectionModel().getSelectedItem()).getNombre2());
-            txtNombre3.setText(((Alumnos) tblAlumnos.getSelectionModel().getSelectedItem()).getNombre3());
-            txtApellido1.setText(((Alumnos) tblAlumnos.getSelectionModel().getSelectedItem()).getApellido1());
-            txtApellido2.setText(((Alumnos) tblAlumnos.getSelectionModel().getSelectedItem()).getApellido2());
+            txtId.setText(String.valueOf(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getId()));
+            tpkHoraFinal.setValue(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getHorarioFinal());
+            tpkHoraInicio.setValue(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getHorarioInicio());
+            ckbLunes.setSelected(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getLunes());
+            ckbMartes.setSelected(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getMartes());
+            ckbMiercoles.setSelected(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getMiercoles());
+            ckbJueves.setSelected(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getJueves());
+            ckbViernes.setSelected(((Horarios) tblHorarios.getSelectionModel().getSelectedItem()).getViernes());
         }
     }
 
-    public boolean eliminarAlumno() {
+    public boolean eliminarHorarios() {
         if (existeElementoSeleccionado()) {
-            Alumnos alumno = (Alumnos) tblAlumnos.getSelectionModel().getSelectedItem();
+            Horarios horarios = (Horarios) tblHorarios.getSelectionModel().getSelectedItem();
 
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Control Académico Kinal");
             confirm.setHeaderText(null);
             confirm.setContentText("Esta apunto de eliminar el registro con los siguientes datos: "
-                    + "\n" + alumno.getCarne() + " || " + alumno.getNombre2() + " || " + alumno.getApellido1()
+                    + "\n" + horarios.getId()
                     + "\nEsta seguro?");
 
             Optional<ButtonType> result = confirm.showAndWait();
@@ -164,13 +156,13 @@ public class AlumnosController implements Initializable {
 
                 PreparedStatement pstmt = null;
                 try {
-                    pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_alumnos_delete(?)}");
-                    pstmt.setString(1, alumno.getCarne());
+                    pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_horarios_delete(?)}");
+                    pstmt.setInt(1, horarios.getId());
                     System.out.println(pstmt.toString());
                     pstmt.execute();
                     return true;
                 } catch (SQLException e) {
-                    System.err.println("\nSe produjo un error al intentar eliminar el alumno siguiente registro: " + alumno.toString());
+                    System.err.println("\nSe produjo un error al intentar eliminar el alumno siguiente registro: " + horarios.toString());
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -184,38 +176,39 @@ public class AlumnosController implements Initializable {
                     }
                 }
             } else {
-                tblAlumnos.getSelectionModel().clearSelection();
-                limpiarCampos();
+                tblHorarios.getSelectionModel().clearSelection();
             }
         }
         return false;
     }
 
-    public ObservableList getAlumnos() {
+    public ObservableList getHorarios() {
 
-        ArrayList<Alumnos> lista = new ArrayList<>();
+        ArrayList<Horarios> arrayListaHorarios = new ArrayList<>();
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_alumnos_read()}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_horarios_read()}");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Alumnos alumno = new Alumnos();
-                alumno.setCarne(rs.getString(1));
-                alumno.setNombre1(rs.getString(2));
-                alumno.setNombre2(rs.getString(3));
-                alumno.setNombre3(rs.getString(4));
-                alumno.setApellido1(rs.getString(5));
-                alumno.setApellido2(rs.getString(6));
+                Horarios horarios = new Horarios();
+                horarios.setId(rs.getInt(1));
+                horarios.setHorarioFinal(rs.getTime(2).toLocalTime());
+                horarios.setHorarioInicio(rs.getTime(3).toLocalTime());
+                horarios.setLunes(rs.getBoolean(4));
+                horarios.setMartes(rs.getBoolean(5));
+                horarios.setMiercoles(rs.getBoolean(6));
+                horarios.setJueves(rs.getBoolean(7));
+                horarios.setViernes(rs.getBoolean(8));
 
-                lista.add(alumno);
+                arrayListaHorarios.add(horarios);
 
-                System.out.println(alumno.toString());
+                System.out.println(horarios.toString());
             }
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de alumnos");
+            System.err.println("\nSe produjo un error al intentar conmsultar la lista de horarios");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
             System.out.println("SQLState: " + e.getSQLState());
@@ -234,48 +227,39 @@ public class AlumnosController implements Initializable {
                 e.printStackTrace();
             }
         }
-        return FXCollections.observableArrayList(lista);
+        return FXCollections.observableArrayList(arrayListaHorarios);
     }
 
     private void deshabilitarCampos() {
-        txtCarne.setEditable(false);
-        txtNombre1.setEditable(false);
-        txtNombre2.setEditable(false);
-        txtNombre3.setEditable(false);
-        txtApellido1.setEditable(false);
-        txtApellido2.setEditable(false);
-
-        txtCarne.setDisable(true);
-        txtNombre1.setDisable(true);
-        txtNombre2.setDisable(true);
-        txtNombre3.setDisable(true);
-        txtApellido1.setDisable(true);
-        txtApellido2.setDisable(true);
+        txtId.setDisable(true);
+        tpkHoraFinal.setDisable(true);
+        tpkHoraInicio.setDisable(true);
+        ckbLunes.setDisable(true);
+        ckbMartes.setDisable(true);
+        ckbMiercoles.setDisable(true);
+        ckbJueves.setDisable(true);
+        ckbViernes.setDisable(true);
     }
 
     private void habilitarCampos() {
-        txtCarne.setEditable(false);
-        txtNombre1.setEditable(true);
-        txtNombre2.setEditable(true);
-        txtNombre3.setEditable(true);
-        txtApellido1.setEditable(true);
-        txtApellido2.setEditable(true);
-
-        txtCarne.setDisable(true);
-        txtNombre1.setDisable(false);
-        txtNombre2.setDisable(false);
-        txtNombre3.setDisable(false);
-        txtApellido1.setDisable(false);
-        txtApellido2.setDisable(false);
+        tpkHoraFinal.setDisable(false);
+        tpkHoraInicio.setDisable(false);
+        ckbLunes.setDisable(false);
+        ckbMartes.setDisable(false);
+        ckbMiercoles.setDisable(false);
+        ckbJueves.setDisable(false);
+        ckbViernes.setDisable(false);
     }
 
     private void limpiarCampos() {
-        txtCarne.setText("");
-        txtNombre1.setText("");
-        txtNombre2.setText("");
-        txtNombre3.setText("");
-        txtApellido1.setText("");
-        txtApellido2.setText("");
+        txtId.setText("");
+        tpkHoraFinal.getEditor().clear();
+        tpkHoraInicio.getEditor().clear();
+        ckbLunes.setSelected(false);
+        ckbMartes.setSelected(false);
+        ckbMiercoles.setSelected(false);
+        ckbJueves.setSelected(false);
+        ckbViernes.setSelected(false);
     }
 
     @FXML
@@ -283,9 +267,7 @@ public class AlumnosController implements Initializable {
         switch (operacion) {
             case NINGUNO:
                 habilitarCampos();
-                tblAlumnos.setDisable(true);
-                txtCarne.setEditable(true);
-                txtCarne.setDisable(false);
+                tblHorarios.setDisable(true);
                 limpiarCampos();
                 btnNuevo.setText("Guardar");
                 btnModificar.setText("Cancelar");
@@ -303,11 +285,11 @@ public class AlumnosController implements Initializable {
                 operacion = Operacion.GUARDAR;
                 break;
             case GUARDAR:
-                if (agregarAlumno()) {
+                if (agregarHorario()) {
                     cargarDatos();
                     limpiarCampos();
                     deshabilitarCampos();
-                    tblAlumnos.setDisable(false);
+                    tblHorarios.setDisable(false);
                     btnModificar.setText("Modificar");
                     imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
                     btnNuevo.setText("nuevo");
@@ -326,65 +308,50 @@ public class AlumnosController implements Initializable {
                 break;
         }
     }
-    
-    private boolean agregarAlumno() {
-        if (!(txtNombre1.getText().equals("") || txtCarne.getText().equals("") || txtApellido1.getText().equals(""))) {
-            if (!(txtCarne.getText().charAt(0) == ' ' || txtNombre1.getText().charAt(0) == ' ' || txtApellido1.getText().charAt(0) == ' ')) {
-                if (!(txtCarne.getText().length() >= 8 || txtNombre1.getText().length() >= 16 || txtNombre2.getText().length() >= 16
-                        || txtNombre3.getText().length() >= 16 || txtApellido1.getText().length() >= 16 || txtApellido2.getText().length() >= 16)) {
 
-                    Alumnos alumno = new Alumnos();
-                    alumno.setCarne(txtCarne.getText());
-                    alumno.setNombre1(txtNombre1.getText());
-                    alumno.setNombre2(txtNombre2.getText());
-                    alumno.setNombre3(txtNombre3.getText());
-                    alumno.setApellido1(txtApellido1.getText());
-                    alumno.setApellido2(txtApellido2.getText());
+    private boolean agregarHorario() {
+        if (!(tpkHoraFinal.getEditor().getText().equals("") || tpkHoraInicio.getEditor().getText().equals(""))) {
+            
+            Horarios horarios = new Horarios();
+            horarios.setHorarioFinal(tpkHoraInicio.getValue());
+            horarios.setHorarioInicio(tpkHoraFinal.getValue());
+            horarios.setLunes(ckbLunes.isSelected());
+            horarios.setMartes(ckbMartes.isSelected());
+            horarios.setMiercoles(ckbMiercoles.isSelected());
+            horarios.setJueves(ckbJueves.isSelected());
+            horarios.setViernes(ckbViernes.isSelected());
 
-                    PreparedStatement pstmt = null;
+            PreparedStatement pstmt = null;
 
-                    try {
-                        pstmt = Conexion.getInstance().getConexion().prepareCall("Call sp_alumnos_create(?, ?, ?, ?, ?, ?)");
+            try {
+                pstmt = Conexion.getInstance().getConexion().prepareCall("Call sp_horarios_create(?, ?, ?, ?, ?, ?, ?)");
 
-                        System.out.println(pstmt.toString());
+                System.out.println(pstmt.toString());
 
-                        pstmt.setString(1, alumno.getCarne());
-                        pstmt.setString(2, alumno.getNombre1());
-                        pstmt.setString(3, alumno.getNombre2());
-                        pstmt.setString(4, alumno.getNombre3());
-                        pstmt.setString(5, alumno.getApellido1());
-                        pstmt.setString(6, alumno.getApellido2());
-                        pstmt.execute();
-                        cargarDatos();
-                        return true;
+                pstmt.setTime(1, Time.valueOf(horarios.getHorarioFinal()));
+                pstmt.setTime(2, Time.valueOf(horarios.getHorarioInicio()));
+                pstmt.setBoolean(3, horarios.getLunes());
+                pstmt.setBoolean(4, horarios.getMartes());
+                pstmt.setBoolean(5, horarios.getMiercoles());
+                pstmt.setBoolean(6, horarios.getJueves());
+                pstmt.setBoolean(7, horarios.getViernes());
+                pstmt.execute();
+                cargarDatos();
+                return true;
 
-                    } catch (SQLException e) {
-                        System.err.println("Se produjo un error al intentar insertar el siguiente registro: " + alumno.toString());
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (pstmt != null) {
-                                pstmt.close();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+            } catch (SQLException e) {
+                System.err.println("Se produjo un error al intentar insertar el siguiente registro: " + horarios.toString());
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (pstmt != null) {
+                        pstmt.close();
                     }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Control academico");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Limite de caracteres excedido");
-                    alert.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Control academico");
-                alert.setHeaderText(null);
-                alert.setContentText("Verifique que los campos no contengan un espacio al inicio");
-                alert.show();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -427,7 +394,7 @@ public class AlumnosController implements Initializable {
                 break;
 
             case GUARDAR:
-                tblAlumnos.setDisable(false);
+                tblHorarios.setDisable(false);
                 btnModificar.setText("Modificar");
                 imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
                 btnNuevo.setText("nuevo");
@@ -443,18 +410,18 @@ public class AlumnosController implements Initializable {
                 imgReporte.setDisable(false);
                 limpiarCampos();
                 deshabilitarCampos();
-                tblAlumnos.getSelectionModel().clearSelection();
+                tblHorarios.getSelectionModel().clearSelection();
                 operacion = Operacion.NINGUNO;
                 break;
             case MODIFICAR:
                 if (existeElementoSeleccionado()) {
-                    if (actualizarAlumno()) {
+                    if (actualizarHorario()) {
                         cargarDatos();
                         limpiarCampos();
                         deshabilitarCampos();
 
-                        tblAlumnos.setDisable(false);
-                        tblAlumnos.getSelectionModel().clearSelection();
+                        tblHorarios.setDisable(false);
+                        tblHorarios.getSelectionModel().clearSelection();
                         btnModificar.setText("Modificar");
                         imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
                         btnEliminar.setText("Eliminar");
@@ -479,62 +446,58 @@ public class AlumnosController implements Initializable {
         }
     }
 
-    private boolean actualizarAlumno() {
-        if (!(txtNombre1.getText().equals("") || txtCarne.getText().equals("") || txtApellido1.getText().equals(""))) {
-            if (!(txtCarne.getText().charAt(0) == ' ' || txtNombre1.getText().charAt(0) == ' ' || txtApellido1.getText().charAt(0) == ' ')) {
-                    
-                    Alumnos alumno = new Alumnos();
-                    alumno.setCarne(txtCarne.getText());
-                    alumno.setNombre1(txtNombre1.getText());
-                    alumno.setNombre2(txtNombre2.getText());
-                    alumno.setNombre3(txtNombre3.getText());
-                    alumno.setApellido1(txtApellido1.getText());
-                    alumno.setApellido2(txtApellido2.getText());
+    private boolean actualizarHorario() {
+        if (!(tpkHoraFinal.getEditor().getText().equals("") || tpkHoraInicio.getEditor().getText().equals(""))) {
+            
+            Horarios horarios = new Horarios();
+            horarios.setId(Integer.valueOf(txtId.getText()));
+            horarios.setHorarioFinal(tpkHoraFinal.getValue());
+            horarios.setHorarioInicio(tpkHoraInicio.getValue());
+            horarios.setLunes(ckbLunes.isSelected());
+            horarios.setMartes(ckbMartes.isSelected());
+            horarios.setMiercoles(ckbMiercoles.isSelected());
+            horarios.setJueves(ckbJueves.isSelected());
+            horarios.setViernes(ckbViernes.isSelected());
 
-                    PreparedStatement pstmt = null;
+            PreparedStatement pstmt = null;
 
-                    try {
-                        pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_alumnos_update(?, ?, ?, ?, ?, ?)}");
-                        pstmt.setString(1, alumno.getCarne());
-                        pstmt.setString(2, alumno.getNombre1());
-                        pstmt.setString(3, alumno.getNombre2());
-                        pstmt.setString(4, alumno.getNombre3());
-                        pstmt.setString(5, alumno.getApellido1());
-                        pstmt.setString(6, alumno.getApellido2());
+            try {
+                pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_horarios_update(?, ?, ?, ?, ?, ?, ?, ?)}");
+                pstmt.setInt(1, horarios.getId());
+                pstmt.setTime(2, Time.valueOf(horarios.getHorarioFinal()));
+                pstmt.setTime(3, Time.valueOf(horarios.getHorarioInicio()));
+                pstmt.setBoolean(4, horarios.getLunes());
+                pstmt.setBoolean(5, horarios.getMartes());
+                pstmt.setBoolean(6, horarios.getMiercoles());
+                pstmt.setBoolean(7, horarios.getJueves());
+                pstmt.setBoolean(8, horarios.getViernes());
 
-                        System.out.println(pstmt.toString());
+                System.out.println(pstmt);
 
-                        pstmt.execute();
+                pstmt.execute();
 
-                        return true;
-                    } catch (SQLException e) {
-                        System.out.println("Se produjo un error al intentar actualizar el siguiente registro: " + alumno.toString());
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (pstmt != null) {
-                                pstmt.close();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                return true;
+            } catch (SQLException e) {
+                System.out.println("Se produjo un error al intentar actualizar el siguiente registro: " + horarios.toString());
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (pstmt != null) {
+                        pstmt.close();
                     }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Control academico");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Limite de caracteres excedido");
-                    alert.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Control academico");
-                alert.setHeaderText(null);
-                alert.setContentText("Verifique que los campos no contengan un espacio al inicio");
-                alert.show();
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Control academico");
+            alert.setHeaderText(null);
+            alert.setContentText("Antes de continuar rellene todos los campos");
+            alert.show();
+        }
         return false;
     }
 
@@ -542,7 +505,7 @@ public class AlumnosController implements Initializable {
     private void clicEliminar() {
         switch (operacion) {
             case MODIFICAR:
-                tblAlumnos.getSelectionModel().clearSelection();
+                tblHorarios.getSelectionModel().clearSelection();
                 btnEliminar.setText("Eliminar");
                 imgEliminar.setImage(new Image(PAQUETE_IMAGE + "Eliminar.png"));
                 btnModificar.setText("Modificar");
@@ -562,7 +525,7 @@ public class AlumnosController implements Initializable {
             case NINGUNO:
                 if (existeElementoSeleccionado()) {
 
-                    if (eliminarAlumno()) {
+                    if (eliminarHorarios()) {
                         cargarDatos();
                         limpiarCampos();
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);

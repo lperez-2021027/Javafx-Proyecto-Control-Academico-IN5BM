@@ -14,6 +14,8 @@ import org.in5bm.jsaldana_lperez.controllers.CursosController;
 import org.in5bm.jsaldana_lperez.controllers.MenuPrincipalController;
 import org.in5bm.jsaldana_lperez.controllers.SalonesController;
 import org.in5bm.jsaldana_lperez.controllers.AsignacionesAlumnosController;
+import org.in5bm.jsaldana_lperez.controllers.HorariosController;
+import org.in5bm.jsaldana_lperez.controllers.InstructoresController;
 
 /**
  *
@@ -99,6 +101,24 @@ public class Principal extends Application {
             asigancionesAlumnos.setEscenarioPrincipal(this);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void mostrarEscenaHorarios() {
+        try {
+            HorariosController horariosController = (HorariosController) cambiarEscena("HorariosView.fxml", 1024, 600);
+            horariosController.setEscenarioPrincipal(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void mostrarEscenaInstructores() {
+        try {
+            InstructoresController instructoresController = (InstructoresController) cambiarEscena("InstructoresView.fxml", 1024, 600);
+            instructoresController.setEscenarioPrincipal(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

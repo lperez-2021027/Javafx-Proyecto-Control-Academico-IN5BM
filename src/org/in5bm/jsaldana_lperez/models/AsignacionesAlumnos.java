@@ -6,24 +6,25 @@ import javafx.beans.property.ObjectProperty; // Para tipos de datos inexistentes
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
+ * @author José Roberto Saldaña Arrazola
  * @author Luis Carlos Pérez
- * @date 4/05/2022
- * @time 19:40:35
+ * @date 26-abr-2022
+ * @time 8:26:32
  *
  * Código técnico: IN5BM
- *
  */
+
 public class AsignacionesAlumnos {
 
     // Atributos
     private IntegerProperty id;
     private StringProperty alumnoId;
     private IntegerProperty cursoId;
-    private ObjectProperty<LocalDate> fechaAsignacion;
+    private ObjectProperty<LocalDateTime> fechaAsignacion;
 
     // Constructor nulo
     public AsignacionesAlumnos() {
@@ -34,7 +35,7 @@ public class AsignacionesAlumnos {
     }
 
     // Construcor con parámetros
-    public AsignacionesAlumnos(int id, String alumnoId, int cursoId, LocalDate fechaAsignacion) {
+    public AsignacionesAlumnos(int id, String alumnoId, int cursoId, LocalDateTime fechaAsignacion) {
         this.id = new SimpleIntegerProperty(id);
         this.alumnoId = new SimpleStringProperty(alumnoId);
         this.cursoId = new SimpleIntegerProperty(cursoId);
@@ -79,21 +80,20 @@ public class AsignacionesAlumnos {
         this.cursoId.set(cursoId);
     }
     
-    public ObjectProperty<LocalDate> fechaAsignacion() {
+    public ObjectProperty<LocalDateTime> fechaAsignacion() {
         return fechaAsignacion;
     }
     
-    public LocalDate getFechaAsignacion() {
+    public LocalDateTime getFechaAsignacion() {
         return fechaAsignacion.get();
     }
     
-    public void setFechaAsignacion(LocalDate fechaAsignacion) {
+    public void setFechaAsignacion(LocalDateTime fechaAsignacion) {
         this.fechaAsignacion.set(fechaAsignacion);
     }
 
     @Override
     public String toString() {
-        return ("id: " + id + " alumnoId: " + alumnoId + " cursoId: " + cursoId
-                + " fechaAsignacion: " + fechaAsignacion);
+        return id + " | " + " | " + fechaAsignacion;
     }
 }

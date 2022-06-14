@@ -50,6 +50,16 @@ public class MenuPrincipalController implements Initializable {
         escenarioPrincipal.mostrarEscenaAsignacionesAlumnos();
     }
     
+    @FXML
+    private void clicHorarios (ActionEvent event) {
+        escenarioPrincipal.mostrarEscenaHorarios();
+    }
+    
+    @FXML
+    private void clicInstructores (ActionEvent event) {
+        escenarioPrincipal.mostrarEscenaInstructores();
+    }
+    
     public Principal getEscenarioPrincipal(){
         return escenarioPrincipal;
     }

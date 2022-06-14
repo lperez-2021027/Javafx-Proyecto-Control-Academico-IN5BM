@@ -1,40 +1,40 @@
 package org.in5bm.jsaldana_lperez.models;
 
+import java.time.LocalTime;
+
 /**
  *
+ * @author José Roberto Saldaña Arrazola
  * @author Luis Carlos Pérez
- * @date 4/05/2022
- * @time 12:08:59
- * 
- *Código técnico: IN5BM
+ * @date 26-abr-2022
+ * @time 8:26:32
  *
+ * Código técnico: IN5BM
  */
+
 public class Horarios {
-    
-    // Atributos
-    private String horarioInicio;
-    private String horarioFinal;
-    private byte lunes;
-    private byte martes;
-    private byte miercoles;
-    private byte jueves;
-    private byte viernes;
-    
-    // Constructores
-    // Constructor nulo
-    public Horarios(){
-        
+
+    private int id;
+    private LocalTime horarioInicio;
+    private LocalTime horarioFinal;
+    private boolean lunes;
+    private boolean martes;
+    private boolean miercoles;
+    private boolean jueves;
+    private boolean viernes;
+
+    public Horarios() {
+
     }
-    
-    // Constructor con parámetros not null
-    public Horarios(String horarioInicio, String horarioFinal){
+
+    public Horarios(int id, LocalTime horarioInicio, LocalTime horarioFinal) {
+        this.id = id;
         this.horarioInicio = horarioInicio;
         this.horarioFinal = horarioFinal;
     }
-    
-    // Constructor con todos los parámetros
-    public Horarios(String horarioInicio, String horarioFinal, byte lunes,
-            byte martes, byte miercoles, byte jueves, byte viernes){
+
+    public Horarios(int id, LocalTime horarioInicio, LocalTime horarioFinal, boolean lunes, boolean martes, boolean miercoles, boolean jueves, boolean viernes) {
+        this.id = id;
         this.horarioInicio = horarioInicio;
         this.horarioFinal = horarioFinal;
         this.lunes = lunes;
@@ -43,66 +43,77 @@ public class Horarios {
         this.jueves = jueves;
         this.viernes = viernes;
     }
-    
-    // Métodos Getter´s y Setter´s
-    public String getHorarioInicio(){
+
+    public Horarios(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalTime getHorarioInicio() {
         return horarioInicio;
     }
-    
-    public void setHorarioInicio(String horarioInicio){
+
+    public void setHorarioInicio(LocalTime horarioInicio) {
         this.horarioInicio = horarioInicio;
     }
-    
-    public String getHorarioFinal(){
+
+    public LocalTime getHorarioFinal() {
         return horarioFinal;
     }
-    
-    public void setHorarioFinal(String horarioFinal){
+
+    public void setHorarioFinal(LocalTime horarioFinal) {
         this.horarioFinal = horarioFinal;
     }
-    
-    public byte getLunes(){
+
+    public boolean getLunes() {
         return lunes;
     }
-    
-    public void setLunes(byte lunes){
+
+    public void setLunes(boolean lunes) {
         this.lunes = lunes;
     }
-    
-    public byte getMartes(){
+
+    public boolean getMartes() {
         return martes;
     }
-    
-    public void setMartes(byte martes){
+
+    public void setMartes(boolean martes) {
         this.martes = martes;
     }
-    
-    public byte getMiercoles(){
+
+    public boolean getMiercoles() {
         return miercoles;
     }
-    
-    public void setMiercoles(byte miercoles){
+
+    public void setMiercoles(boolean miercoles) {
         this.miercoles = miercoles;
     }
-    
-    public byte getJueves(){
+
+    public boolean getJueves() {
         return jueves;
     }
-    
-    public void setJueves(byte jueves){
+
+    public void setJueves(boolean jueves) {
         this.jueves = jueves;
     }
-    
-    public byte getViernes(){
+
+    public boolean getViernes() {
         return viernes;
     }
-    
-    public void setViernes(byte viernes){
+
+    public void setViernes(boolean viernes) {
         this.viernes = viernes;
     }
 
     @Override
     public String toString() {
-        return "Horarios{" + "horarioInicio=" + horarioInicio + ", horarioFinal=" + horarioFinal + ", lunes=" + lunes + ", martes=" + martes + ", miercoles=" + miercoles + ", jueves=" + jueves + ", viernes=" + viernes + '}';
+        return id + " | " + horarioInicio + " - " + horarioFinal;
     }
 }

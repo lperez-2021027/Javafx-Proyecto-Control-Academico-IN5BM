@@ -2,45 +2,44 @@ package org.in5bm.jsaldana_lperez.models;
 
 /**
  *
- * @author José Roberto SAldaña Arrazola
+ * @author José Roberto Saldaña Arrazola
  * @author Luis Carlos Pérez
- * @date 27-abr-2022
- * @time 19:03:57
+ * @date 26-abr-2022
+ * @time 8:26:32
  *
  * Código técnico: IN5BM
  */
 
 public class CarrerasTecnicas {
-    
+
     //Atributos
     private String codigoTecnico;
     private String carrera;
     private String grado;
     private char seccion;
     private String jornada;
-    
+
     //Constructores
     //Constructor null
-    public CarrerasTecnicas(){
+    public CarrerasTecnicas() {
     }
-    
+
     //Constructo con párametro codigoTecnico (Primary key)
-    public CarrerasTecnicas(String codigoTecnico){
+    public CarrerasTecnicas(String codigoTecnico) {
         this.codigoTecnico = codigoTecnico;
-    }    
-    
+    }
+
     //Constructor con párametros not null (lo son todos los atributos)
-    public CarrerasTecnicas(String codigoTecnico, String carrera, 
-            String grado, char seccion, String jornada){
+    public CarrerasTecnicas(String codigoTecnico, String carrera,
+            String grado, char seccion, String jornada) {
         this.codigoTecnico = codigoTecnico;
         this.carrera = carrera;
         this.grado = grado;
         this.seccion = seccion;
         this.jornada = jornada;
     }
-    
-    //Metodos Getter´s y Setter´s
 
+    //Metodos Getter´s y Setter´s
     public String getCodigoTecnico() {
         return codigoTecnico;
     }
@@ -80,12 +79,11 @@ public class CarrerasTecnicas {
     public void setJornada(String jornada) {
         this.jornada = jornada;
     }
-    
-    //Método toString
 
+    //Método toString
     @Override
     public String toString() {
-        return "CarrerasTecnicas{" + "codigoTecnico=" + codigoTecnico + ", carrera=" + carrera + ", grado=" + grado + ", seccion=" + seccion + ", jornada=" + jornada + '}';
+        return codigoTecnico + " | " + carrera + " | " + grado;
     }
-    
+
 }
