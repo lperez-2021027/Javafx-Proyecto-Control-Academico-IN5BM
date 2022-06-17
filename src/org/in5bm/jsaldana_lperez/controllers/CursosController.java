@@ -206,6 +206,10 @@ public class CursosController implements Initializable {
             listaObservableCursos = FXCollections.observableArrayList(lista);
 
         } catch (SQLException e) {
+            System.err.println("\nSe produjo un error al intentar consultar la lista de cursos");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -231,7 +235,7 @@ public class CursosController implements Initializable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_carreras_tecnicas_read()}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_carreras_tecnicas_read()}");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -250,7 +254,10 @@ public class CursosController implements Initializable {
             listaObservableCarrerasTecnicas = FXCollections.observableArrayList(lista);
 
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de alumnos");
+            System.err.println("\nSe produjo un error al intentar consultar la lista de carreras tecnicas");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -292,7 +299,10 @@ public class CursosController implements Initializable {
                 System.out.println(carreraTecnica.toString());
             }
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de alumnos");
+            System.err.println("\nSe produjo un error al intentar consultar la lista de carreras tecnicas");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -318,7 +328,7 @@ public class CursosController implements Initializable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_salones_read()}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_salones_read()}");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -337,7 +347,10 @@ public class CursosController implements Initializable {
             listaObservableSalones = FXCollections.observableArrayList(lista);
 
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de salones");
+            System.err.println("\nSe produjo un error al intentar consultar la lista de salones");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -361,7 +374,7 @@ public class CursosController implements Initializable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_salones_read_by_id(?)}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_salones_read_by_id(?)}");
             pstmt.setString(1, id);
             rs = pstmt.executeQuery();
 
@@ -375,7 +388,10 @@ public class CursosController implements Initializable {
                 System.out.println(salon.toString());
             }
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de salones");
+            System.err.println("\nSe produjo un error al intentar consultar la lista de salones");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -401,7 +417,7 @@ public class CursosController implements Initializable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_horarios_read()}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_horarios_read()}");
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -423,7 +439,7 @@ public class CursosController implements Initializable {
             listaObservableHorarios = FXCollections.observableArrayList(arrayListaHorarios);
 
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de horarios");
+            System.err.println("\nSe produjo un error al intentar consultar la lista de horarios");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
             System.out.println("SQLState: " + e.getSQLState());
@@ -452,7 +468,7 @@ public class CursosController implements Initializable {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = Conexion.getInstance().getConexion().prepareCall("{Call sp_horarios_read_by_id(?)}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_horarios_read_by_id(?)}");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
 
@@ -470,7 +486,7 @@ public class CursosController implements Initializable {
                 System.out.println(horario.toString());
             }
         } catch (SQLException e) {
-            System.err.println("\nSe produjo un error al intentar conmsultar la lista de horarios");
+            System.err.println("\nSe produjo un error al intentar consultar la lista de horarios");
             System.out.println("Message: " + e.getMessage());
             System.out.println("Error code: " + e.getErrorCode());
             System.out.println("SQLState: " + e.getSQLState());
@@ -715,8 +731,7 @@ public class CursosController implements Initializable {
         PreparedStatement pstmt = null;
 
         try {
-            pstmt = Conexion.getInstance().getConexion()
-                    .prepareCall("{call sp_cursos_create(?, ?, ?, ?, ?, ?, ?, ?)}");
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_cursos_create(?, ?, ?, ?, ?, ?, ?, ?)}");
 
             pstmt.setString(1, curso.getNombreCurso());
             pstmt.setInt(2, curso.getCiclo());
@@ -749,6 +764,7 @@ public class CursosController implements Initializable {
     }
 
     private boolean comprobacionCampos() {
+        // Comprobando que los campos not null contengan datos.
         if (txtNombreCurso.getText().isEmpty()
                 || cmbInstructor.getValue() == null
                 || cmbCarreraTecnica.getValue() == null
@@ -756,8 +772,12 @@ public class CursosController implements Initializable {
                 || cmbSalon.getValue() == null) {
             mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos contengan datos.");
         } else {
+            // Comprobando que los datos ingresados en el campo Nombre Curso no sean espacios.
             if (txtNombreCurso.getText().charAt(0) == ' ') {
                 mostrarAlert(TIPO_ALERT_WARNING, "Verifique que el campo Nombre del curso no contenga espacios al inicio.");
+            } // Comprobando la longitud del campo Nombre Curso.
+            else if (txtNombreCurso.getText().length() > 255) {
+                mostrarAlert(TIPO_ALERT_WARNING, "Dato invalido el campo Nombre del curso, muy extenso.");
             } else {
                 return true;
             }
@@ -839,33 +859,31 @@ public class CursosController implements Initializable {
                 break;
             case MODIFICAR:
                 if (comprobacionCampos()) {
-                    if (existeElementosSeleccionado()) {
-                        if (actualizarCursos()) {
-                            cargarDatos();
-                            limpiarCampos();
+                    if (actualizarCursos()) {
+                        cargarDatos();
+                        limpiarCampos();
 
-                            tblCursos.setDisable(false);
-                            tblCursos.getSelectionModel().clearSelection();
-                            btnModificar.setText("Modificar");
-                            imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
-                            btnEliminar.setText("Eliminar");
-                            imgEliminar.setImage(new Image(PAQUETE_IMAGE + "Eliminar.png"));
-                            btnNuevo.setVisible(true);
-                            imgNuevo.setVisible(true);
-                            btnEliminar.setVisible(true);
-                            btnReporte.setVisible(true);
-                            imgReporte.setVisible(true);
-                            imgEliminar.setVisible(true);
-                            btnEliminar.setDisable(false);
-                            imgNuevo.setDisable(false);
-                            btnNuevo.setDisable(false);
-                            btnReporte.setDisable(false);
-                            imgReporte.setDisable(false);
-                            imgEliminar.setDisable(false);
-                            imgReporte.setDisable(false);
+                        tblCursos.setDisable(false);
+                        tblCursos.getSelectionModel().clearSelection();
+                        btnModificar.setText("Modificar");
+                        imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
+                        btnEliminar.setText("Eliminar");
+                        imgEliminar.setImage(new Image(PAQUETE_IMAGE + "Eliminar.png"));
+                        btnNuevo.setVisible(true);
+                        imgNuevo.setVisible(true);
+                        btnEliminar.setVisible(true);
+                        btnReporte.setVisible(true);
+                        imgReporte.setVisible(true);
+                        imgEliminar.setVisible(true);
+                        btnEliminar.setDisable(false);
+                        imgNuevo.setDisable(false);
+                        btnNuevo.setDisable(false);
+                        btnReporte.setDisable(false);
+                        imgReporte.setDisable(false);
+                        imgEliminar.setDisable(false);
+                        imgReporte.setDisable(false);
 
-                            operacion = Operacion.NINGUNO;
-                        }
+                        operacion = Operacion.NINGUNO;
                     }
                 }
                 break;
@@ -1009,13 +1027,7 @@ public class CursosController implements Initializable {
 
     @FXML
     private void clicReporte() {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setHeaderText(null);
-        alerta.setTitle("Informacion");
-        alerta.setContentText("Función solo disponible en la versión pro.");
-        Stage stageAlert = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stageAlert.getIcons().add(new Image("org/in5bm/jsaldana_lperez/resources/images/informacion.png"));
-        alerta.show();
+        mostrarAlert(TIPO_ALERT_INFORMATION, "Funcion disponible en la versión pro.");
     }
 
     @FXML

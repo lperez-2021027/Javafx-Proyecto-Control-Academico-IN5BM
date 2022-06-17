@@ -35,7 +35,6 @@ import javafx.scene.image.ImageView;
  *
  * Código técnico: IN5BM
  */
-
 public class CarrerasTecnicasController implements Initializable {
 
     private final String PAQUETE_IMAGE = "org/in5bm/jsaldana_lperez/resources/images/";
@@ -344,6 +343,7 @@ public class CarrerasTecnicasController implements Initializable {
     }
 
     private boolean comprobacionCamposTxt() {
+        // Comprobando que los campos contengan datos.
         if (txtCodigoTecnico.getText().isEmpty()
                 || txtCarrera.getText().isEmpty()
                 || txtGrado.getText().isEmpty()
@@ -351,14 +351,19 @@ public class CarrerasTecnicasController implements Initializable {
                 || txtJornada.getText().isEmpty()) {
             mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos contengan datos.");
         } else {
+            // Comprobando que los datos ingresados no sean espacios.
             if (txtCodigoTecnico.getText().charAt(0) == ' '
                     || txtCarrera.getText().charAt(0) == ' '
                     || txtGrado.getText().charAt(0) == ' '
                     || txtSeccion.getText().charAt(0) == ' '
                     || txtJornada.getText().charAt(0) == ' ') {
                 mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos no contenga un espacio al inicio.");
-            } else if (txtSeccion.getText().length() > 1) {
-                mostrarAlert(TIPO_ALERT_WARNING, "Valor invalido en el campo Seccion.");
+            } else if (txtSeccion.getText().length() > 1
+                    || txtCarrera.getText().length() > 45
+                    || txtGrado.getText().length() > 10
+                    || txtJornada.getText().length() > 45
+                    || txtCodigoTecnico.getText().length() > 6) {
+                mostrarAlert(TIPO_ALERT_WARNING, "Datos invalidos, demasiado extensos, rectifique.");
             } else {
                 return true;
             }
@@ -373,6 +378,8 @@ public class CarrerasTecnicasController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setTitle(TITULO_ALERT);
                 alert.setContentText(alertContent);
+                Stage stageAlert = (Stage) alert.getDialogPane().getScene().getWindow();
+                stageAlert.getIcons().add(new Image(PAQUETE_IMAGE + "informacion.png"));
                 alert.show();
                 break;
             case TIPO_ALERT_INFORMATION:
@@ -432,24 +439,26 @@ public class CarrerasTecnicasController implements Initializable {
                 operacion = Operacion.NINGUNO;
                 break;
             case MODIFICAR:
-                if (actualizarCarreraTecnica()) {
-                    cargarDatos();
-                    limpiarCampos();
-                    deshabilitarCampos();
+                if (comprobacionCamposTxt()) {
+                    if (actualizarCarreraTecnica()) {
+                        cargarDatos();
+                        limpiarCampos();
+                        deshabilitarCampos();
 
-                    btnEliminar.setText("Eliminar");
-                    btnModificar.setText("Modificar");
-                    imgEliminar.setImage(new Image(PAQUETE_IMAGE + "Eliminar.png"));
-                    imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
+                        btnEliminar.setText("Eliminar");
+                        btnModificar.setText("Modificar");
+                        imgEliminar.setImage(new Image(PAQUETE_IMAGE + "Eliminar.png"));
+                        imgModificar.setImage(new Image(PAQUETE_IMAGE + "Editar.png"));
 
-                    btnNuevo.setVisible(true);
-                    btnNuevo.setDisable(false);
-                    imgNuevo.setVisible(true);
-                    btnReporte.setVisible(true);
-                    btnReporte.setDisable(false);
-                    imgReporte.setVisible(true);
+                        btnNuevo.setVisible(true);
+                        btnNuevo.setDisable(false);
+                        imgNuevo.setVisible(true);
+                        btnReporte.setVisible(true);
+                        btnReporte.setDisable(false);
+                        imgReporte.setVisible(true);
 
-                    operacion = Operacion.NINGUNO;
+                        operacion = Operacion.NINGUNO;
+                    }
                 }
                 break;
         }

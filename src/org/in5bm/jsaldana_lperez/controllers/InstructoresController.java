@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import org.in5bm.jsaldana_lperez.db.Conexion;
@@ -40,7 +41,6 @@ import org.in5bm.jsaldana_lperez.system.Principal;
  *
  * Código técnico: IN5BM
  */
-
 public class InstructoresController implements Initializable {
 
     private final String PAQUETE_IMAGE = "org/in5bm/jsaldana_lperez/resources/images/";
@@ -173,6 +173,9 @@ public class InstructoresController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.err.println("Se pordujo un error al intentar eliminar el registro: " + instructores.toString());
+                System.out.println("Message: " + e.getMessage());
+                System.out.println("Error code: " + e.getErrorCode());
+                System.out.println("SQLState: " + e.getSQLState());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -393,6 +396,9 @@ public class InstructoresController implements Initializable {
             return true;
         } catch (SQLException e) {
             System.err.println("\nSe produjo un error al intentar agregar el registro : " + instructor.toString());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -409,22 +415,52 @@ public class InstructoresController implements Initializable {
     }
 
     private boolean comprobacionCamposTxt() {
+        // Comprobando que los campos not null contengan datos.
         if (txtNombre1.getText().isEmpty()
                 || txtApellido1.getText().isEmpty()
                 || txtEmail.getText().isEmpty()
                 || txtTelefono.getText().isEmpty()
                 || dtpkFechaNacimiento.getValue() == null) {
-            mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos Primer Nombre, Primer Apellido, Email, Teléfono o Fecha Nacimiento contengan datos.");
+            mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos Primer Nombre, "
+                    + "Primer Apellido, Email, Teléfono o Fecha Nacimiento contengan datos.");
         } else {
+            // Comprobando que los datos ingresados no sean espacios.
             if (txtNombre1.getText().charAt(0) == ' '
                     || txtApellido1.getText().charAt(0) == ' '
-                    || txtEmail.getText().charAt(0) == ' '
-                    || txtTelefono.getText().charAt(0) == ' ') {
-                mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos Primer Nombre, Primer Apellido, Email o Teléfono no contengan espacios al inicio.");
-            } else if (!txtEmail.getText().contains("@") || !txtEmail.getText().contains(".com")) {
+                    || txtEmail.getText().charAt(0) == ' ') {
+                mostrarAlert(TIPO_ALERT_WARNING, "Verifique que los campos Primer Nombre, "
+                        + "Primer Apellido o Email no contengan espacios al inicio.");
+            } 
+            // Comprobando la longitud de los datos.
+            else if (txtNombre1.getText().length() > 15
+                    || txtNombre2.getText().length() > 15
+                    || txtNombre3.getText().length() > 15
+                    || txtApellido1.getText().length() > 15
+                    || txtApellido2.getText().length() > 15
+                    || txtDireccion.getText().length() > 45) {
+                mostrarAlert(TIPO_ALERT_WARNING, "Datos invalidos, demasiado extensos, rectifique.");
+            }
+            // Comprobando el campo Email.
+            else if (!txtEmail.getText().contains("@") 
+                    || !txtEmail.getText().contains(".")
+                    || txtEmail.getText().length() > 45) {
                 mostrarAlert(TIPO_ALERT_WARNING, "Datos no validos en el campo Email.");
-            } else {
-                return true;
+            } 
+            // Comprobando el campo Teléfono, para ingresar unicamente digitos.
+            else {
+                if (txtTelefono.getText().charAt(0) == ' ') {
+                    mostrarAlert(TIPO_ALERT_WARNING, "Verifique que el campo Teléfono no "
+                            + "contenga espacios al inicio.");
+                } else {
+                    for (int i = 0; i < txtTelefono.getText().length(); ++i) {
+                        char ch = txtTelefono.getText().charAt(i);
+                        if (Character.isLetter(ch) || txtTelefono.getText().length() > 8) {
+                            mostrarAlert(TIPO_ALERT_WARNING, "Dato invalido en campo Teléfono.");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
             }
         }
         return false;
@@ -437,6 +473,8 @@ public class InstructoresController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setTitle(TITULO_ALERT);
                 alert.setContentText(alertContent);
+                Stage stageAlert = (Stage) alert.getDialogPane().getScene().getWindow();
+                stageAlert.getIcons().add(new Image(PAQUETE_IMAGE + "informacion.png"));
                 alert.show();
                 break;
             case TIPO_ALERT_INFORMATION:
@@ -497,8 +535,8 @@ public class InstructoresController implements Initializable {
                 operacion = Operacion.NINGUNO;
                 break;
             case MODIFICAR:
-                if (actualizarInstrucor()) {
-                    if (comprobacionCamposTxt()) {
+                if (comprobacionCamposTxt()) {
+                    if (actualizarInstrucor()) {
                         cargarDatos();
                         limpiarCampos();
                         deshabilitarCampos();
@@ -554,6 +592,9 @@ public class InstructoresController implements Initializable {
             return true;
         } catch (SQLException e) {
             System.err.println("\nSe produjo un error al intentar actualizar el registro : " + instructor.toString());
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -619,7 +660,7 @@ public class InstructoresController implements Initializable {
 
     @FXML
     void clicReporte(ActionEvent event) {
-
+        mostrarAlert(TIPO_ALERT_INFORMATION, "Funcion disponible en la versión pro.");
     }
 
     @FXML

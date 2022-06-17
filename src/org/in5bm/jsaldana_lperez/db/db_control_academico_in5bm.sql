@@ -125,47 +125,47 @@ create table asignaciones_alumnos (
 
 -- Datos tabla alumnos
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2016021', 'Luisa', 'Fernanda', null, 'Ortiz', 'Monterroso');
+values ('2016021', 'Luisa', 'Fernanda', "", 'Ortiz', 'Monterroso');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2018215', 'Esteban', 'Mauricio', null, 'Guerrero', 'Arriola');
+values ('2018215', 'Esteban', 'Mauricio', "", 'Guerrero', 'Arriola');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2019356', 'Allan', 'Gabriel', null, 'Martinez', 'Mendoza');
+values ('2019356', 'Allan', 'Gabriel', "", 'Martinez', 'Mendoza');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2020165', 'Diego', 'Rene', null, 'Diaz', 'Mazariegos');
+values ('2020165', 'Diego', 'Rene', "", 'Diaz', 'Mazariegos');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2020482', 'Bryan', 'Miguel', null, 'Herrera', 'Avila');
+values ('2020482', 'Bryan', 'Miguel', "", 'Herrera', 'Avila');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2021040', 'José', 'Roberto', null, 'Saldaña', 'Arrazola');
+values ('2021040', 'José', 'Roberto', "", 'Saldaña', 'Arrazola');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2021092', 'Marta', 'Isabela', null, 'Sanches', 'Ramirez');
+values ('2021092', 'Marta', 'Isabela', "", 'Sanches', 'Ramirez');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2021346', 'Andres', 'Eduardo', null, 'Perez', 'Diaz');
+values ('2021346', 'Andres', 'Eduardo', "", 'Perez', 'Diaz');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2021356', 'Javier', 'Esteban', null, 'Garcia', 'Martinez');
+values ('2021356', 'Javier', 'Esteban', "", 'Garcia', 'Martinez');
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
-values ('2020465', 'Jorge', 'Javier', null, 'Gutierrez', 'Estrada');
+values ('2020465', 'Jorge', 'Javier', "", 'Gutierrez', 'Estrada');
 
 -- Datos tabla instructores
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Andres', 'Eduardo', null, 'Hernandez', 'Castillo', '5ta avenida', 'Andres@gmail.com', '64581245', '1998-04-21');
+values ('Andres', 'Eduardo', "", 'Hernandez', 'Castillo', '5ta avenida', 'Andres@gmail.com', '64581245', '1998-04-21');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Juan', 'Esteban', null, 'Vasquez', 'Ramirez', '6ta avenida', 'Juan@gmail.com', '34685946', '2000-09-15');
+values ('Juan', 'Esteban', "", 'Vasquez', 'Ramirez', '6ta avenida', 'Juan@gmail.com', '34685946', '2000-09-15');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Luis', 'Eduardo', null, 'Rodriguez', 'Campos', '4ta avenida', 'luis@gmail.com', '49567812', '2003-01-12');
+values ('Luis', 'Eduardo', "", 'Rodriguez', 'Campos', '4ta avenida', 'luis@gmail.com', '49567812', '2003-01-12');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Vicente', 'Francisco', null, 'Martinez', 'Salazar', '2da avenida', 'Vicente@gmail.com', '34695168', '1994-12-24');
+values ('Vicente', 'Francisco', "", 'Martinez', 'Salazar', '2da avenida', 'Vicente@gmail.com', '34695168', '1994-12-24');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('David', 'Miguel', null, 'Mazariegos', 'Diaz', '8va avenida', 'David@gmail.com', '64951234', '1990-03-10');
+values ('David', 'Miguel', "", 'Mazariegos', 'Diaz', '8va avenida', 'David@gmail.com', '64951234', '1990-03-10');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Guillermo', 'Sebastian', null, 'Ramirez', 'Monterroso', '11va avenida', 'Guillermo@gmail.com', '19468579', '1999-10-29');
+values ('Guillermo', 'Sebastian', "", 'Ramirez', 'Monterroso', '11va avenida', 'Guillermo@gmail.com', '19468579', '1999-10-29');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Jose', 'Omar', null, 'Leon', 'Castillo', '15va avenida', 'Jose@gmail.com', '34916582', '2004-05-16');
+values ('Jose', 'Omar', "", 'Leon', 'Castillo', '15va avenida', 'Jose@gmail.com', '34916582', '2004-05-16');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Maria', 'Isabel', null, 'Gallardo', 'Herrera', '5ta avenida', 'Maria@gmail.com', '86495261', '1995-11-03');
+values ('Maria', 'Isabel', "", 'Gallardo', 'Herrera', '5ta avenida', 'Maria@gmail.com', '86495261', '1995-11-03');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Fernanda', 'Beatriz', null, 'Monterroso', 'Guadalupe', '1ra avenida', 'Fernanda@gmail.com', '48613562', '1976-08-23');
+values ('Fernanda', 'Beatriz', "", 'Monterroso', 'Guadalupe', '1ra avenida', 'Fernanda@gmail.com', '48613562', '1976-08-23');
 insert into instructores (nombre1, nombre2, nombre3, apellido1, apellido2, direccion, email, telefono, fecha_nacimiento)
-values ('Lucas', 'Raul', null, 'Enriqez', 'Galvez', '2da avenida', 'Lucas@gmail.com', '79231648', '1984-09-16');
+values ('Lucas', 'Raul', "", 'Enriqez', 'Galvez', '2da avenida', 'Lucas@gmail.com', '79231648', '1984-09-16');
 
 
 -- Datos tabla salones

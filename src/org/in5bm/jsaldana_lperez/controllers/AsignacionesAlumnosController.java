@@ -602,6 +602,7 @@ public class AsignacionesAlumnosController implements Initializable {
                     limpiarCampos();
                     deshabilitarCampos();
                     cargarDatos();
+                    
                     tblAsignacionesAlumnos.setDisable(false);
                     btnNuevo.setText("Nuevo");
                     imgNuevo.setImage(new Image(PAQUETE_IMAGES + "Agregar.png"));
