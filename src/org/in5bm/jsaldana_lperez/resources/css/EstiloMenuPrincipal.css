@@ -40,6 +40,23 @@
     -fx-font-family: "Times New Roman";
 }
 
+#imgAbout {
+    -fx-backgroun-color: #84e8e8;
+}
+
+#menuOption {
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 14;
+}
+
+#menuBar {
+    -fx-background-radius: 10 10 10 10;
+}
+
+#menuBar:hover {
+    -fx-background-color: #84e8e8;
+}
+
 .BotonesMenu:pressed{
     -fx-background-color: #41b0af;
     -fx-translate-y: 2;

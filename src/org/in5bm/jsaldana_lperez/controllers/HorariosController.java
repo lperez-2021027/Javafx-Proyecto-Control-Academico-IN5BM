@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import java.sql.Time;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.in5bm.jsaldana_lperez.db.Conexion;
 import org.in5bm.jsaldana_lperez.models.Horarios;
+import org.in5bm.jsaldana_lperez.reports.GenerarReporte;
 import org.in5bm.jsaldana_lperez.system.Principal;
 
 /**
@@ -101,6 +105,8 @@ public class HorariosController implements Initializable {
     private JFXTimePicker tpkHoraInicio;
     @FXML
     private JFXTimePicker tpkHoraFinal;
+    @FXML
+    private Label lblRegistros;
 
     private ObservableList<Horarios> listaHorarios;
 
@@ -119,6 +125,39 @@ public class HorariosController implements Initializable {
         colMiercoles.setCellValueFactory(new PropertyValueFactory("miercoles"));
         colJueves.setCellValueFactory(new PropertyValueFactory("jueves"));
         colViernes.setCellValueFactory(new PropertyValueFactory("viernes"));
+        contarRegistros();
+    }
+    
+    public void contarRegistros() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_horarios_count()}");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                lblRegistros.setText("Total de registros: " + Integer.toString(rs.getInt(1)));
+            }
+        } catch (SQLException e) {
+            System.err.println("\nSe produjo un error al intentar consultar el total de la lista horarios");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean existeElementoSeleccionado() {
@@ -547,13 +586,9 @@ public class HorariosController implements Initializable {
 
     @FXML
     private void clicReporte() {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setHeaderText(null);
-        alerta.setTitle("Informacion");
-        alerta.setContentText("Función solo disponible en la versión pro.");
-        Stage stageAlert = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stageAlert.getIcons().add(new Image("org/in5bm/jsaldana_lperez/resources/images/informacion.png"));
-        alerta.show();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_ENTIDAD", PAQUETE_IMAGE + "Horarios.png");
+        GenerarReporte.getInstance().mostrarReporte("ReportHorarios.jasper", parametros, "Reporte Horarios");
     }
 
     @FXML

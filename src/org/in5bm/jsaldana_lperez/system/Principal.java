@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.in5bm.jsaldana_lperez.controllers.AcercaDeController;
 import org.in5bm.jsaldana_lperez.controllers.AlumnosController;
 import org.in5bm.jsaldana_lperez.controllers.CarrerasTecnicasController;
 import org.in5bm.jsaldana_lperez.controllers.CursosController;
@@ -16,6 +17,7 @@ import org.in5bm.jsaldana_lperez.controllers.SalonesController;
 import org.in5bm.jsaldana_lperez.controllers.AsignacionesAlumnosController;
 import org.in5bm.jsaldana_lperez.controllers.HorariosController;
 import org.in5bm.jsaldana_lperez.controllers.InstructoresController;
+import org.in5bm.jsaldana_lperez.controllers.LoginController;
 
 /**
  *
@@ -44,7 +46,17 @@ public class Principal extends Application {
         this.escenarioPrincipal.setResizable(false);
         this.escenarioPrincipal.centerOnScreen();
         this.escenarioPrincipal.setTitle("Control Academico Kinal");
-        mostrarEscenaPrincipal();
+        mostrarLogin();
+    }
+    
+    public void mostrarLogin() {
+        try {
+            LoginController mostrarLogin = (LoginController) cambiarEscena("LoginView.fxml", 1024, 600);
+            mostrarLogin.setEscenarioPrincipal(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.err.println("\nSe produjo un error al intentar mostrar la vista del Menú Principal");
+        }
     }
 
     public void mostrarEscenaPrincipal() {
@@ -117,6 +129,15 @@ public class Principal extends Application {
         try {
             InstructoresController instructoresController = (InstructoresController) cambiarEscena("InstructoresView.fxml", 1024, 600);
             instructoresController.setEscenarioPrincipal(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void mostrarEscenaAcercaDe() {
+        try {
+            AcercaDeController acercaDeController = (AcercaDeController) cambiarEscena("AcercaDeView.fxml", 1024, 600);
+            acercaDeController.setEscenarioPrincipal(this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

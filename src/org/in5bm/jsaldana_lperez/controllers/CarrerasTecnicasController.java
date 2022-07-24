@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +28,7 @@ import org.in5bm.jsaldana_lperez.models.CarrerasTecnicas;
 import org.in5bm.jsaldana_lperez.system.Principal;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import org.in5bm.jsaldana_lperez.reports.GenerarReporte;
 
 /**
  *
@@ -106,6 +110,9 @@ public class CarrerasTecnicasController implements Initializable {
 
     @FXML
     private ImageView imgReporte;
+    
+    @FXML
+    private Label lblRegistros;
 
     @FXML
     private ObservableList<CarrerasTecnicas> listaCarrerasTecnicas;
@@ -122,6 +129,39 @@ public class CarrerasTecnicasController implements Initializable {
         colGrado.setCellValueFactory(new PropertyValueFactory<CarrerasTecnicas, String>("grado"));
         colSeccion.setCellValueFactory(new PropertyValueFactory<CarrerasTecnicas, Character>("seccion"));
         colJornada.setCellValueFactory(new PropertyValueFactory<CarrerasTecnicas, String>("jornada"));
+        contarRegistros();
+    }
+    
+    public void contarRegistros() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_carreras_tecnicas_count()}");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                lblRegistros.setText("Total de registros: " + Integer.toString(rs.getInt(1)));
+            }
+        } catch (SQLException e) {
+            System.err.println("\nSe produjo un error al intentar consultar el total de la lista carreras");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean existeElementosSeleccionado() {
@@ -556,7 +596,9 @@ public class CarrerasTecnicasController implements Initializable {
 
     @FXML
     private void clicReporte() {
-        mostrarAlert(TIPO_ALERT_INFORMATION, "Función solo disponible en la versión pro.");
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_ENTIDAD", PAQUETE_IMAGE + "Carrera_tecnica.png");
+        GenerarReporte.getInstance().mostrarReporte("ReportCarreras.jasper", parametros, "Reporte Carreras Técnicas");
     }
 
     @FXML

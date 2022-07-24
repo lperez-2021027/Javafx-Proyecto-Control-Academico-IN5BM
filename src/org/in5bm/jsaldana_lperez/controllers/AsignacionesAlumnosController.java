@@ -32,6 +32,10 @@ import org.in5bm.jsaldana_lperez.models.Alumnos;
 import org.in5bm.jsaldana_lperez.models.Cursos;
 import org.in5bm.jsaldana_lperez.system.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import javafx.scene.control.Label;
+import org.in5bm.jsaldana_lperez.reports.GenerarReporte;
 
 /**
  *
@@ -45,6 +49,8 @@ import java.time.LocalDateTime;
 
 public class AsignacionesAlumnosController implements Initializable {
 
+    private final String PAQUETE_IMAGE = "org/in5bm/jsaldana_lperez/resources/images/";
+    
     @FXML
     private Button btnNuevo;
     @FXML
@@ -75,6 +81,8 @@ public class AsignacionesAlumnosController implements Initializable {
     private TableColumn<AsignacionesAlumnos, Integer> colCursoId;
     @FXML
     private TableColumn<AsignacionesAlumnos, LocalDateTime> colFechaAsignacion;
+    @FXML
+    private Label lblRegistros;
 
     @FXML
     private ComboBox<Alumnos> cmbAlumno;
@@ -252,6 +260,39 @@ public class AsignacionesAlumnosController implements Initializable {
         colFechaAsignacion.setCellValueFactory(new PropertyValueFactory<>("fechaAsignacion"));
         cmbAlumno.setItems(getAlumnos());
         cmbCurso.setItems(getCursos());
+        contarRegistros();
+    }
+    
+    public void contarRegistros() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_asignaciones_alumnos_count()}");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                lblRegistros.setText("Total de registros: " + Integer.toString(rs.getInt(1)));
+            }
+        } catch (SQLException e) {
+            System.err.println("\nSe produjo un error al intentar consultar el total de la lista asignaciones");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private boolean existeElementoSeleccionado() {
@@ -779,13 +820,21 @@ public class AsignacionesAlumnosController implements Initializable {
 
     @FXML
     private void clicReporte() {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        /*Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("AVISO!!!");
         alerta.setHeaderText(null);
         alerta.setContentText("Esta funcionalidad solo está disponible en la versión PRO");
         Stage stageAlert = (Stage) alerta.getDialogPane().getScene().getWindow();
         stageAlert.getIcons().add(new Image(PAQUETE_IMAGES + "logo.png"));
-        alerta.show();
+        alerta.show();*/
+        
+        /*Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_ENTIDAD", PAQUETE_IMAGE + "Asignaciones.png");
+        parametros.put("idAsignacion", 1);
+        GenerarReporte.getInstance().mostrarReporte("ReportAsignacionAlumnoById.jasper", parametros, "Reporte Asignación Alumno");*/
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_ENTIDAD", PAQUETE_IMAGE + "Asignaciones.png");
+        GenerarReporte.getInstance().mostrarReporte("ReportAsignaciones.jasper", parametros, "Reporte Asignaciones");
     }
 
 }

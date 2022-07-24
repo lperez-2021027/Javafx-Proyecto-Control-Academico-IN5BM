@@ -179,6 +179,7 @@
                               <TextField fx:id="txtId" disable="true" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
+                        <Label fx:id="lblRegistros" layoutX="116.0" layoutY="561.0" prefHeight="24.0" prefWidth="160.0" />
                      </children>
                   </Pane>
                </center>

@@ -212,6 +212,7 @@
                               <Image url="@../resources/images/regreso.png" />
                            </image>
                         </ImageView>
+                        <Label fx:id="lblRegistros" layoutX="15.0" layoutY="528.0" prefHeight="24.0" prefWidth="160.0" />
                      </children>
                   </Pane>
                </center>

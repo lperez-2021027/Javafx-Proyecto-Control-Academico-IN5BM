@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -16,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableView;
@@ -34,6 +37,7 @@ import org.in5bm.jsaldana_lperez.models.Horarios;
 import org.in5bm.jsaldana_lperez.models.Instructores;
 import org.in5bm.jsaldana_lperez.models.Salones;
 import org.in5bm.jsaldana_lperez.models.Cursos;
+import org.in5bm.jsaldana_lperez.reports.GenerarReporte;
 
 /**
  *
@@ -116,6 +120,8 @@ public class CursosController implements Initializable {
     private TableColumn<Cursos, Integer> colHorario;
     @FXML
     private TableColumn<Cursos, String> colSalon;
+    @FXML
+    private Label lblRegistros;
 
     private ObservableList<Cursos> listaObservableCursos;
     private ObservableList<Instructores> listaObservableInstructores;
@@ -153,6 +159,40 @@ public class CursosController implements Initializable {
         cmbSalon.setItems(getSalones());
         cmbHorario.setItems(getHorarios());
         cmbInstructor.setItems(getInstructores());
+        
+        contarRegistros();
+    }
+    
+    public void contarRegistros() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = Conexion.getInstance().getConexion().prepareCall("{call sp_cursos_count()}");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                lblRegistros.setText("Total de registros: " + Integer.toString(rs.getInt(1)));
+            }
+        } catch (SQLException e) {
+            System.err.println("\nSe produjo un error al intentar consultar el total de la lista cursos");
+            System.out.println("Message: " + e.getMessage());
+            System.out.println("Error code: " + e.getErrorCode());
+            System.out.println("SQLState: " + e.getSQLState());
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean existeElementosSeleccionado() {
@@ -971,28 +1011,21 @@ public class CursosController implements Initializable {
                     aler.setTitle("Control Académico Kinal");
                     aler.setHeaderText(null);
                     aler.setContentText("¿Desea eliminar el registro seleccionado?");
+                    
                     Optional<ButtonType> result = aler.showAndWait();
 
                     if (result.get() == ButtonType.OK) {
                         if (eliminarCurso()) {
                             cargarDatos();
                             limpiarCampos();
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Control academico");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Registro eliminado exitosamente");
-                            alert.show();
+                            mostrarAlert(TIPO_ALERT_INFORMATION, "Registro eliminado exitosamente");
                         }
                     } else {
                         tblCursos.getSelectionModel().clearSelection();
                         limpiarCampos();
                     }
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Control academico");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Antes de continuar selecciona un registro");
-                    alert.show();
+                    mostrarAlert(TIPO_ALERT_WARNING, "Antes de continuar selecciona un registro");
                 }
                 break;
         }
@@ -1027,7 +1060,13 @@ public class CursosController implements Initializable {
 
     @FXML
     private void clicReporte() {
-        mostrarAlert(TIPO_ALERT_INFORMATION, "Funcion disponible en la versión pro.");
+        /*Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_ENTIDAD", PAQUETE_IMAGE + "Curso.png");
+        parametros.put("idCurso", 1);
+        GenerarReporte.getInstance().mostrarReporte("ReportCursosById.jasper", parametros, "Reporte Curso");*/
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("IMAGE_ENTIDAD", PAQUETE_IMAGE + "Curso.png");
+        GenerarReporte.getInstance().mostrarReporte("ReportCursos.jasper", parametros, "Reporte Cursos");
     }
 
     @FXML

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.in5bm.jsaldana_lperez.controllers.AcercaDeController">
+   <children>
+      <Pane layoutX="254.0" layoutY="22.0" prefHeight="294.0" prefWidth="196.0">
+         <children>
+            <ImageView fitHeight="198.0" fitWidth="239.0" layoutX="-23.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               <image>
+                  <Image url="@../resources/images/LuisCarlosPerez.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <VBox layoutX="512.0" layoutY="55.0" prefHeight="413.0" prefWidth="411.0">
+         <children>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Nombre: Luis Carlos Pérez.">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Grado: 5to. Perito">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Sección: &quot;E&quot;">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Profesor: Jorge Luis Pérez Canto">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Curso: Taller">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Carrera: Perito en informática">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Carné: 2021027">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="61.0" prefWidth="411.0" text="Correo: lperez-2021027@kinal.edu.gt">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="50.0" prefWidth="420.0" text="Versión 1.0">
+               <font>
+                  <Font name="Times New Roman" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <ImageView fx:id="imgAtras" fitHeight="63.0" fitWidth="77.0" layoutX="892.0" layoutY="494.0" onMouseClicked="#clicRegresar" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/images/Regreso.png" />
+         </image>
+      </ImageView>
+      <Pane layoutY="-5.0" prefHeight="610.0" prefWidth="231.0">
+         <children>
+            <ImageView fitHeight="610.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/images/Textura.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="77.0" layoutY="270.0" text="De...">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="56.0" layoutY="214.0" text="Acerca">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="19.0" layoutY="-10.0" prefHeight="214.0" prefWidth="190.0" style="-fx-background-color: #8DD4D6; -fx-background-radius: 10 10 100 100;">
+         <children>
+            <ImageView fitHeight="116.0" fitWidth="172.0" layoutX="9.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/images/logoPrincipal.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

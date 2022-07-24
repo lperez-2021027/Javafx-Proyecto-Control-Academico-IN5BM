@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Plantilla" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ec85118-f279-47ef-8320-ad8106daafa5">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Control Académico IN5BM"/>
+	<parameter name="IMAGE_LOGO" class="java.lang.String"/>
+	<parameter name="IMAGE_FOOTER" class="java.lang.String"/>
+	<parameter name="IMAGE_ENTIDAD" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[call sp_carreras_tecnicas_report()]]>
+	</queryString>
+	<field name="codigo_tecnico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo_tecnico"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo_tecnico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carreras_tecnicas"/>
+	</field>
+	<field name="carrera" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="carrera"/>
+		<property name="com.jaspersoft.studio.field.label" value="carrera"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carreras_tecnicas"/>
+	</field>
+	<field name="grado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="grado"/>
+		<property name="com.jaspersoft.studio.field.label" value="grado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carreras_tecnicas"/>
+	</field>
+	<field name="seccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="seccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="seccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carreras_tecnicas"/>
+	</field>
+	<field name="jornada" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="jornada"/>
+		<property name="com.jaspersoft.studio.field.label" value="jornada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carreras_tecnicas"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="570" height="30" uuid="c9d5a3f0-91e1-4639-a471-38acd89c98f8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[Control Académico KINAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="570" height="20" uuid="ecc131ee-ab9b-49a5-aac0-c08edc2a122f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="15"/>
+				</textElement>
+				<text><![CDATA[Z. 12 Av. 52]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="570" height="20" uuid="6e6fb88c-7925-4ba0-81ce-1eb360db8c93"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="15"/>
+				</textElement>
+				<text><![CDATA[Teléfono: 2216 0000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="570" height="20" uuid="ab4617f4-b4c3-4fc8-aa5d-e16ea7b0172d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIT: 152635-0]]></text>
+			</staticText>
+			<image>
+				<reportElement x="460" y="0" width="90" height="90" uuid="7f8b40d5-b812-410a-9aaf-da0e8fc1a074">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{IMAGE_ENTIDAD}]]></imageExpression>
+			</image>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="247" y="90" width="100" height="16" uuid="00cc9e13-e4f3-4ded-9c98-c17418b8612c">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="5" y="6" width="163" height="109" uuid="1d125962-e2c1-45f3-863d-4ce8770e19be">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{IMAGE_LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="3" width="570" height="25" uuid="1a0e40c0-c5df-40f0-a7e9-82df709facb0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte carreras técnicas]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<line>
+				<reportElement x="10" y="40" width="570" height="1" uuid="c6e43b86-cf49-4257-a877-d9f0da44978d">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="0" width="70" height="30" uuid="4ff00264-50d9-4246-86a4-902ba3c87911">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce93b7f0-ceef-42bf-ad8f-fef0c417bd9a"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<text><![CDATA[Código técnico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="100" height="30" uuid="6714377a-c4a8-45a4-b1a0-efa88d3ff417">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2a6fb31d-9560-41e5-b62c-f494597f84c9"/>
+				</reportElement>
+				<text><![CDATA[Carrera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="50" height="30" uuid="c7f81ad1-2f17-439b-814c-4c11a2553ca5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="24aaa559-6baf-4a11-997e-8b0f2b1c7cd6"/>
+				</reportElement>
+				<text><![CDATA[Grado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="40" height="30" uuid="39abf57d-bc70-4a3f-b1c3-407c4d5a4805">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83b57e70-6cef-41ac-b2ce-019f61302ee4"/>
+				</reportElement>
+				<text><![CDATA[Sección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="100" height="30" uuid="a88d2610-7e62-4f8e-959d-f300ec1ea385">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00e2bb50-16a1-40d0-b303-dac3a8d3c360"/>
+				</reportElement>
+				<text><![CDATA[Jornada]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="5" width="70" height="30" uuid="98160e30-65a9-4504-82b6-57776d0031fb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce93b7f0-ceef-42bf-ad8f-fef0c417bd9a"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codigo_tecnico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="5" width="170" height="30" uuid="9abf0d0f-c6c5-4a46-b807-e34d39cacb15">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2a6fb31d-9560-41e5-b62c-f494597f84c9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{carrera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="5" width="50" height="30" uuid="dabcdf37-32b2-4f0a-97ba-a86e1c02dbcc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="24aaa559-6baf-4a11-997e-8b0f2b1c7cd6"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{grado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="5" width="40" height="30" uuid="845f7b57-06cf-4e9a-a2a7-a3d0c2f2f515">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83b57e70-6cef-41ac-b2ce-019f61302ee4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{seccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="5" width="100" height="30" uuid="3d6e528a-662e-4f87-a197-a15024fe679d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00e2bb50-16a1-40d0-b303-dac3a8d3c360"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{jornada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<line>
+				<reportElement x="10" y="7" width="570" height="1" uuid="ded75b2d-d58e-4fc1-be13-7d7d4a814499">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="150" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="5" width="570" height="45" uuid="5c6c15ee-46b6-41f7-ba87-d9c606ca58ee"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="13"/>
+				</textElement>
+				<text><![CDATA[Luis Carlos Pérez
+2021027
+IN5BM]]></text>
+			</staticText>
+			<image>
+				<reportElement x="40" y="58" width="480" height="90" uuid="1abf0968-69f5-43df-8e3c-3f44c39a8347"/>
+				<imageExpression><![CDATA[$P{IMAGE_FOOTER}]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

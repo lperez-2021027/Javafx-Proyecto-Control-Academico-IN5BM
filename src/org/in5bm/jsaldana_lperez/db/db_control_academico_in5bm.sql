@@ -121,7 +121,37 @@ create table asignaciones_alumnos (
     on delete cascade on update cascade
 );
 
+drop table if exists roles;
+create table roles (
+	id int not null,
+    descripcion varchar(50) not null,
+    primary key (id)
+);
+
+drop table if exists usuarios;
+create table usuarios (
+	usuario varchar(25) not null,
+    pass varchar(25) not null,
+    nombre varchar(50) not null,
+    roles_id int not null,
+    primary key (usuario),
+    constraint fk_usuarios_roles foreign key (roles_id) references roles(id)
+    on delete cascade on update cascade
+);
+
 -- Inserción de datos instrucciones DML
+
+-- Datos tabla roles
+insert into roles (id, descripcion) 
+values (1, "Administrador");
+insert into roles (id, descripcion) 
+values (2, "Estandar");
+
+-- Datos tabla usuarios
+insert into usuarios(usuario, pass, nombre, roles_id) 
+values ("root", "admin", "Luis Pérez", 1);
+insert into usuarios(usuario, pass, nombre, roles_id) 
+values ("kinal", "12345", "Carlos Pérez", 2);
 
 -- Datos tabla alumnos
 insert into alumnos (carne, nombre1, nombre2, nombre3, apellido1, apellido2)
@@ -392,6 +422,39 @@ begin
 end $$
 DELIMITER ;
 
+-- Reporte alumnos
+DELIMITER $$
+drop procedure if exists sp_alumnos_report$$
+create procedure sp_alumnos_report()
+begin
+	select
+		a.carne,
+        concat(
+			a.nombre1, " ",
+			if(a.nombre2 is null, "", a.nombre2), " ",
+            if(a.nombre3 is null, "", a.nombre3), " ",
+            a.apellido1, " ",
+            if(a.apellido2 is null, "", a.apellido2)
+        ) as nombre_completo
+	from
+		alumnos as a;
+end $$
+DELIMITER ;
+-- call sp_alumnos_report()
+
+-- Contar registros
+DELIMITER $$
+drop procedure if exists sp_alumnos_count $$
+create procedure sp_alumnos_count()
+begin
+	select
+		count(carne)
+	from
+		alumnos;
+end $$
+DELIMITER ;
+-- call sp_alumnos_count()
+
 /*
 CRUD tabla instructores
 */
@@ -528,6 +591,44 @@ begin
 end $$
 DELIMITER ;
 
+-- Reporte instructores
+DELIMITER $$
+drop procedure if exists sp_instructores_report$$
+create procedure sp_instructores_report()
+begin
+	select 
+		i.id, 
+        concat(
+			i.nombre1, 
+			if(nombre2 is null, "", nombre2), " ",
+			if(nombre3 is null, "", nombre3), " ", 
+			apellido1, " ", 
+			if(apellido2 is null, "", apellido2)
+        ) as nombre_completo,
+		i.direccion,
+        i.email,
+        i.telefono,
+		i.fecha_nacimiento
+	from 
+		instructores as i
+	order by i.id asc;
+end $$
+DELIMITER ;
+-- call sp_instructores_report()
+
+-- Contar registros 
+DELIMITER $$
+drop procedure if exists sp_instructores_count $$
+create procedure sp_instructores_count()
+begin
+	select
+		count(id)
+	from
+		asignaciones_alumnos;
+end $$
+DELIMITER ;
+-- call sp_instructores_count()
+
 /*
 CRUD tabla salones
 */
@@ -632,6 +733,37 @@ begin
 		codigo_salon = _codigo_salon;
 end $$
 DELIMITER ;
+
+-- Reporte salones
+DELIMITER $$
+drop procedure if exists sp_salones_report $$
+create procedure sp_salones_report()
+begin
+	select
+		s.codigo_salon,
+        if(s.descripcion is null, "", s.descripcion) as descripcion,
+        s.capacidad_maxima,
+        if(s.edificio is null, "", s.edificio) as edificio,
+        if(s.nivel is null, "", s.nivel) as nivel
+	from
+		salones as s
+	order by s.codigo_salon asc;
+end $$
+DELIMITER ;
+-- call sp_salones_report()
+
+-- Contar registros
+DELIMITER $$
+drop procedure if exists sp_salones_count $$
+create procedure sp_salones_count()
+begin
+	select
+		count(codigo_salon)
+	from
+		salones;
+end $$
+DELIMITER ;
+-- call sp_salones_count()
 
 /*
 CRUD tabla carreras_tecnicas
@@ -738,6 +870,36 @@ begin
 		codigo_tecnico = _codigo_tecnico;
 end $$
 DELIMITER ;
+
+-- Reporte carreras tecnicas
+DELIMITER $$
+drop procedure if exists sp_carreras_tecnicas_report $$
+create procedure sp_carreras_tecnicas_report()
+begin
+	select
+		ct.codigo_tecnico,
+        ct.carrera,
+        ct.grado,
+        ct.seccion,
+        ct.jornada
+	from
+		carreras_tecnicas as ct;
+end $$
+DELIMITER ;
+-- call sp_carreras_tecnicas_report()
+
+-- Contar registros
+DELIMITER $$
+drop procedure if exists sp_carreras_tecnicas_count $$
+create procedure sp_carreras_tecnicas_count()
+begin
+	select
+		count(codigo_tecnico)
+	from
+		carreras_tecnicas;
+end $$
+DELIMITER ;
+-- call sp_carreras_tecnicas_count()
 
 /*
 CRUD tabla horarios
@@ -861,6 +1023,40 @@ begin
 		id = _id;
 end $$
 DELIMITER ;
+
+-- Reporte horarios
+DELIMITER $$
+drop procedure if exists sp_horarios_report $$
+create procedure sp_horarios_report()
+begin
+	select
+		h.id,
+        h.horario_inicio,
+        h.horario_final,
+        if(h.lunes is true, "Si", "No") as lunes,
+        if(h.martes is true, "Si", "No") as martes,
+        if(h.miercoles is true, "Si", "No") as miercoles,
+        if(h.jueves is true, "Si", "No") as jueves,
+        if(h.viernes is true, "Si", "No") as viernes
+	from
+		horarios as h
+	order by id asc;
+end $$
+DELIMITER ;
+-- call sp_horarios_report()
+
+-- Contar registros
+DELIMITER $$
+drop procedure if exists sp_horarios_count $$
+create procedure sp_horarios_count()
+begin
+	select
+		count(id)
+	from
+		horarios;
+end $$
+DELIMITER ;
+-- call sp_carreras_tecnicas_count()
 
 /*
 CRUD tabla cursos
@@ -994,6 +1190,85 @@ begin
 end $$
 DELIMITER ;
 
+-- Reporte cursos
+DELIMITER $$
+drop procedure if exists sp_cursos_report $$
+create procedure sp_cursos_report()
+begin
+	select
+		c.id,
+        c.nombre_curso,
+        if(c.ciclo is null, "", c.ciclo) as ciclo,
+        if(c.cupo_maximo is null, "", c.cupo_maximo) as cupo_maximo,
+        if(c.cupo_minimo is null, "", c.cupo_minimo) as cupo_minimo,
+        c.carrera_tecnica_id,
+        c.horario_id,
+        h.horario_inicio,
+        h.horario_final,
+        c.instructor_id,
+        concat(
+			i.nombre1, " ",
+            i.apellido1
+        ) as nombre_instructor,
+        c.salon_id
+	from
+		cursos as c
+        inner join horarios as h
+        inner join instructores as i
+	on 
+		c.horario_id = h.id and c.instructor_id = i.id
+	order by c.id asc;
+end $$
+DELIMITER ;
+-- call sp_cursos_report();
+
+-- Reporte cursos por id
+DELIMITER $$
+drop procedure if exists sp_cursos_report_by_id $$
+create procedure sp_cursos_report_by_id(in id_ int)
+begin
+	select
+		c.id,
+        c.nombre_curso,
+        if(c.ciclo is null, "", c.ciclo) as ciclo,
+        if(c.cupo_maximo is null, "", c.cupo_maximo) as cupo_maximo,
+        if(c.cupo_minimo is null, "", c.cupo_minimo) as cupo_minimo,
+        c.carrera_tecnica_id,
+        c.horario_id,
+        h.horario_inicio,
+        h.horario_final,
+        c.instructor_id,
+        concat(
+			i.nombre1, " ",
+            i.apellido1
+        ) as nombre_instructor,
+        c.salon_id
+	from
+		cursos as c
+        inner join horarios as h
+        inner join instructores as i
+	on 
+		c.horario_id = h.id and c.instructor_id = i.id
+	where
+		id_ = c.id
+	order by c.id asc;
+end $$
+DELIMITER ;
+-- call sp_cursos_report_by_id(2);
+
+-- Contar registros
+DELIMITER $$
+drop procedure if exists sp_cursos_count $$
+create procedure sp_cursos_count()
+begin
+	select
+		count(id)
+	from
+		cursos;
+end $$
+DELIMITER ;
+-- call sp_cursos_count()
+
 /*
 CRUD tabla asignaciones_alumnos
 */
@@ -1088,3 +1363,109 @@ begin
 		id = _id;
 end $$
 DELIMITER ;
+
+-- Reporte asignaciones alumnos
+DELIMITER $$
+drop procedure if exists sp_asignaciones_alumnos_report $$
+create procedure sp_asignaciones_alumnos_report()
+begin
+	select 
+		al.id,
+        al.alumno_id,
+        concat(
+			a.nombre1, " ",
+			if(a.nombre2 is null, "", a.nombre2), " ",
+            if(a.nombre3 is null, "", a.nombre3), " ",
+            a.apellido1, " ",
+            if(a.apellido2 is null, "", a.apellido2)
+        ) as nombre_completo,
+        c.nombre_curso,
+        al.curso_id,
+        al.fecha_asignacion
+	from
+		asignaciones_alumnos as al 
+        inner join alumnos as a
+        inner join cursos as c
+	on
+		al.alumno_id = a.carne and al.curso_id = c.id;
+end $$
+DELIMITER ;
+-- call sp_asignaciones_alumnos_report()
+
+-- Reporte asignaciones alumnos por id
+DELIMITER $$
+drop procedure if exists sp_asignaciones_alumnos_report_by_id $$
+create procedure sp_asignaciones_alumnos_report_by_id (in id_ int)
+begin
+	select 
+		al.id,
+        al.alumno_id,
+        concat(
+			a.nombre1, " ",
+			if(a.nombre2 is null, "", a.nombre2), " ",
+            if(a.nombre3 is null, "", a.nombre3), " ",
+            a.apellido1, " ",
+            if(a.apellido2 is null, "", a.apellido2)
+        ) as nombre_completo,
+        c.nombre_curso,
+        al.curso_id,
+        al.fecha_asignacion
+	from
+		asignaciones_alumnos as al 
+        inner join alumnos as a
+        inner join cursos as c
+	on
+		al.alumno_id = a.carne and al.curso_id = c.id
+	where
+		al.id = id_;
+end $$
+DELIMITER ;
+-- call sp_asignaciones_alumnos_report_by_id(1)
+
+-- Contar registros
+DELIMITER $$
+drop procedure if exists sp_asignaciones_alumnos_count $$
+create procedure sp_asignaciones_alumnos_count()
+begin
+	select
+		count(id)
+	from
+		asignaciones_alumnos;
+end $$
+DELIMITER ;
+-- call sp_asignaciones_alumnos_count()
+
+-- Procedimientos para verificación de Login
+DELIMITER $$
+drop procedure if exists sp_comprobacion_campos $$
+create procedure sp_comprobacion_campos()
+begin
+	select
+		u.usuario,
+        u.pass
+	from
+		usuarios as u;
+end $$
+DELIMITER ;
+-- call sp_comprobacion_campos();
+
+-- Procedimientos para verificación el rol
+DELIMITER $$
+drop procedure if exists sp_comprobacion_roles $$
+create procedure sp_comprobacion_roles(in _usuario varchar(25), in _pass varchar(25))
+begin
+	select
+		u.nombre,
+        r.id,
+        r.descripcion
+	from
+		usuarios as u
+        inner join roles as r
+	on
+		u.roles_id = r.id
+	where
+		_usuario = u.usuario and
+        _pass = u.pass;
+end $$
+DELIMITER ;
+-- call sp_comprobacion_roles("root", "admin");
